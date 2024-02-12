@@ -10,3 +10,9 @@ include: [base.yaml, "zephyr,memory-common.yaml"]
 properties:
   zephyr,memory-region:
     required: true
+
+  delay-relocation:
+    type: boolean
+    description: |
+      Delay .data relocation and .bss zero initialization until PRE_KERNEL_1
+      initialization levels have completed.

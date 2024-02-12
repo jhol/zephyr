@@ -844,6 +844,22 @@ FUNC_NORETURN void z_cstart(void)
 	CODE_UNREACHABLE; /* LCOV_EXCL_LINE */
 }
 
+#ifdef CONFIG_DELAY_DATA_RELOCATION
+extern void bss_zeroing_relocation_delayed(void);
+extern void data_copy_xip_relocation_delayed(void);
+
+static int init_delay_relocation(void)
+{
+	bss_zeroing_relocation_delayed();
+	data_copy_xip_relocation_delayed();
+
+	return 0;
+}
+
+SYS_INIT(init_delay_relocation, POST_KERNEL,
+	 CONFIG_KERNEL_INIT_PRIORITY_DELAY_DATA_RELOCATION);
+#endif	/* CONFIG_DELAY_DATA_RELOCATION */
+
 #ifdef CONFIG_OBJ_CORE_SYSTEM
 static int init_cpu_obj_core_list(void)
 {

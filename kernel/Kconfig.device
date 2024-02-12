@@ -37,6 +37,15 @@ endmenu
 
 menu "Initialization Priorities"
 
+config KERNEL_INIT_PRIORITY_DELAY_DATA_RELOCATION
+	int "Delayed relocation initialization priority"
+	default 10
+	help
+	  When delayed data relocation is used, this priority needs to be
+	  lower than the required memory device, which must be initialized
+	  first, but lower than any code or data which will be relocated,
+	  which must execute afterward.
+
 config KERNEL_INIT_PRIORITY_OBJECTS
 	int "Kernel objects initialization priority"
 	default 30
